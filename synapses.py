@@ -6,6 +6,7 @@ class Synapse:
 		super().__init__()
 		self.neuron = neuron
 		self.weight = weight
+		self.prev_weight = weight
 		self.status = status
 
 	def SetActive(self, status: bool):
