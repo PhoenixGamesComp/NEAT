@@ -15,22 +15,22 @@ class NeuralNetwork:
 
 	def FeedForward(self):
 		for data in self.dna.genetic_data:
-			for connection in data.connections:
-				data.output_value = data.activation_function.Function(
-					data.input_value
-				)
-				connection.neuron.input_value = (
-					connection.neuron.input_value
-					+ data.output_value
-					* connection.weight
-				)
-
+			if data.status is True:
+				for connection in data.connections:
+					if connection.status is True:
+						data.output_value = data.activation_function.Function(
+							data.input_value
+						)
+						connection.neuron.input_value = (
+							connection.neuron.input_value
+							+ data.output_value
+							* connection.weight
+						)
 		for x in range(1, self.dna.output_neurons + 1):
 			curr_neuron = self.dna.genetic_data[-x]
 			curr_neuron.output_value = curr_neuron.activation_function.Function(
 				curr_neuron.input_value
 			)
-			print(curr_neuron.output_value)
 
 	def Error(self):
 		neuron_error = []

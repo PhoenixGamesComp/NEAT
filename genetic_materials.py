@@ -1,15 +1,18 @@
 from neurons import Neuron
+import copy
 
 
 class GeneticMaterial:
 	def __init__(self, *neurons: Neuron):
 		super().__init__()
+		neurons = list(neurons)
 		self.genetic_data = []
 		self.input_neurons = 0
 		self.output_neurons = 0
 		self.synapses = 0
 		for neuron in neurons:
-			self.genetic_data.append(neuron)
+			if isinstance(neuron, Neuron):
+				self.genetic_data.append(neuron)
 
 		self.__getInputNeurons()
 		self.__getOutputNeurons()
@@ -18,7 +21,7 @@ class GeneticMaterial:
 	def __getSynapses(self):
 		for data in self.genetic_data:
 			for connection in data.connections:
-				if connection.status:
+				if connection.status is True:
 					self.synapses = self.synapses + 1
 
 	def __getInputNeurons(self):
@@ -40,6 +43,16 @@ class GeneticMaterial:
 				return connection
 
 		return None
+
+	def DisableDuplicateNeurons(self):
+		for x in range(len(self.genetic_data)):
+			if self.genetic_data[x].status is True:
+				for y in range(x, len(self.genetic_data)):
+					if self.genetic_data[x].id == self.genetic_data[y].id:
+						self.genetic_data[y].SetActive(False)
+
+	def DuplicateMaterial(self):
+		return copy.deepcopy(self)
 
 	def __functionSTR(self, id):
 		return {

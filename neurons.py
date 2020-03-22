@@ -18,3 +18,6 @@ class Neuron:
 
 	def RemoveSynapse(self, synapse):
 		self.connections.remove(synapse)
+
+	def SetActive(self, status: bool):
+		self.status = status
